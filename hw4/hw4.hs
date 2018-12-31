@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -Wall #-}
-
+import Data.List
 -- ex1 --
 fun1' :: [Integer] -> Integer
 fun1' = product . map (\x -> x - 2) . filter even
@@ -35,4 +35,18 @@ addNode node tree = case tree of
 foldTree :: [a] -> Tree a
 foldTree = foldr addNode Leaf
 
+-- ex3 --
+xor :: [Bool] -> Bool
+xor = foldl (\acc t -> if t == True then not acc else acc) False
+
+map' :: (a -> b) -> [a] -> [b]
+map' f = foldr (\x acc -> f x : acc) []
+
+-- ex4 --
+cartProd :: [a] -> [b] -> [(a,b)]
+cartProd xs ys = [(x,y) | x <- xs, y <- ys]
+sieveSundaram :: Integer -> [Integer]
+sieveSundaram n = map (\x -> 2*x + 1) ([1..n] \\ nums)
+            where nums = map (\(i,j) -> i + j + 2*i*j) ( filter (\(i,j) -> i + j + 2*i*j <= n)
+                        ( cartProd [1..n] [1..n] ))
 
